@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>えんえんトンネル距離計算用ページ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #score {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+
+        table {
+            width: 50%;
+            margin: 50px auto;
+            border-collapse: collapse;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="score">
+        <h2 style="text-align: center;">現時点での延長距離は約0m</h2>
+    </div>
+
+    <button onclick="updateScore('a')">npc (すこし遠くなる)</button>
+    <button onclick="updateScore('b')">スイッチ (とんでもなく遠くなる)</button>
+    <button onclick="updateScore('c')">スイッチ (すこし遠くなる)</button>
+    <button onclick="updateScore('d')">スイッチ (すこし近くなる)</button>
+    <button onclick="updateScore('e')">スイッチ (とんでもなく近くなる)</button>
+    <br>
+    <button onclick="undoLastAction()">1つ前に戻る</button>
+
+    <script>
+        let score = 0;
+        let history = [];
+
+        function updateScore(button) {
+            let points = 0;
+            switch (button) {
+                case 'a':
+                    points = 500;
+                    break;
+                case 'b':
+                    points = 3000;
+                    break;
+                case 'c':
+                    points = 1500;
+                    break;
+                case 'd':
+                    points = -1000;
+                    break;
+                case 'e':
+                    points = -2000;
+                    break;
+            }
+            history.push(points);
+            score += points;
+            updateScoreDisplay();
+        }
+
+        function undoLastAction() {
+            if (history.length > 0) {
+                let lastAction = history.pop();
+                score -= lastAction;
+                updateScoreDisplay();
+            }
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById('score').innerHTML = `<h2 style="text-align: center;">現時点での延長距離は約${score}m</h2>`;
+        }
+    </script>
+
+    <h2 style="text-align: center;">（参考）NPCへの最善の返答<br></h2>
+    <h3 style="text-align: center;">※距離延長関連のみ</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>名前</th>
+                <th>返答</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>しがないニワトリ（移動）</td>
+                <td>おいしかった</td>
+            </tr>
+            <tr>
+                <td>勝負する少年（移動、坊主頭）</td>
+                <td>グー</td>
+            </tr>
+            <tr>
+                <td>つかれる女（右側、紫色の服の女性）</td>
+                <td>疲れていない</td>
+            </tr>
+            <tr>
+                <td>哲学する少年（移動、青色の服、メガネ）</td>
+                <td>いつか終わる</td>
+            </tr>
+            <tr>
+                <td>トンネル作業員（移動、作業服）</td>
+                <td>長くすべき</td>
+            </tr>
+            <tr>
+                <td rowspan="9">こんがらがる男（犬を連れた青年）</td>
+                <td>じぶんだ</td>
+            </tr>
+            <tr>
+                <td>難しい問題がひとつ</td>
+            </tr>
+            <tr>
+                <td>すごく痛いこと</td>
+            </tr>
+            <tr>
+                <td>自転車で行く</td>
+            </tr>
+            <tr>
+                <td>にぎりつぶす</td>
+            </tr>
+            <tr>
+                <td>別人に生まれ変わる</td>
+            </tr>
+            <tr>
+                <td>新発売のすばらしいおもちゃ</td>
+            </tr>
+            <tr>
+                <td>他人のせいにする</td>
+            </tr>
+            <tr>
+                <td>砂漠のまんなか</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>
